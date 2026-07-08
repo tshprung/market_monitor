@@ -5,6 +5,24 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import main as main_module
 
 
+def test_check_trigger_multiple_tranches_have_distinct_messages(monkeypatch):
+    # A sharp drop past several thresholds at once must produce messages
+    # that are distinguishable from each other, not identical duplicates.
+    monkeypatch.setattr(
+        main_module, "get_current_price_and_high", lambda ticker, period: (70.0, 100.0)  # -30%
+    )
+    trigger = {
+        "type": "drawdown_pct", "thresholds": [-8, -15, -25, -35],
+        "tranche_pct": 25, "resets_on_new_high": True,
+    }
+    messages, _ = main_module.check_trigger("TEST", "TEST.X", trigger, None)
+    assert len(messages) == 3  # -8, -15, -25 all fire; -35 does not
+    assert len(set(messages)) == 3  # all distinct, not copies of each other
+    assert any("-8%" in m for m in messages)
+    assert any("-15%" in m for m in messages)
+    assert any("-25%" in m for m in messages)
+
+
 def test_check_trigger_first_run_seeds_state_from_fetch(monkeypatch):
     # drawdown_pct: first run (saved_state=None) must seed reference_price
     # from the fetched historical high, not from today's price.
