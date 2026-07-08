@@ -26,3 +26,10 @@ def get_current_price_and_high(ticker: str, period: str = "10y") -> Tuple[float,
     current_price = data["Close"].iloc[-1].item()
     all_time_high = data["Close"].cummax().iloc[-1].item()
     return current_price, all_time_high
+
+
+def get_latest_price(ticker: str, period: str = "5d") -> float:
+    """Just the latest close -- used for price_target mode, where no
+    historical high is needed, only today's price vs. a fixed target."""
+    data = get_price_history(ticker, period=period)
+    return data["Close"].iloc[-1].item()
