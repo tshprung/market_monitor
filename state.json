@@ -13,11 +13,15 @@
       "triggered_thresholds": []
     },
     "WIG20": {
-      "reference_price": 3622.18994140625,
+      "reference_price": 3636.260009765625,
       "triggered_thresholds": []
     },
     "TA-35": {
       "reference_price": 4481.0400390625,
+      "triggered_thresholds": []
+    },
+    "S&P 500": {
+      "reference_price": 7609.77978515625,
       "triggered_thresholds": []
     }
   },
