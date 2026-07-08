@@ -1,1 +1,37 @@
-{}
+{
+  "indices": {
+    "Nasdaq 100": {
+      "reference_price": 30660.599609375,
+      "triggered_thresholds": []
+    },
+    "DAX": {
+      "reference_price": 25817.890625,
+      "triggered_thresholds": []
+    },
+    "FTSE 100": {
+      "reference_price": 10910.599609375,
+      "triggered_thresholds": []
+    },
+    "WIG20": {
+      "reference_price": 3622.18994140625,
+      "triggered_thresholds": []
+    },
+    "TA-35": {
+      "reference_price": 4481.0400390625,
+      "triggered_thresholds": []
+    }
+  },
+  "dividends": {
+    "BATS.L": {
+      "reference_price": 5608.14697265625,
+      "triggered_thresholds": [
+        -8,
+        -15
+      ]
+    },
+    "BEZQ.TA": {
+      "reference_price": 428,
+      "triggered_thresholds": []
+    }
+  }
+}
