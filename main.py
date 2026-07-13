@@ -110,6 +110,9 @@ def check_indices(state: dict) -> List[str]:
 
 
 def check_dividends(state: dict) -> List[str]:
+    """Fundamentals pass/fail is now tracked in state so the "\u2705 passes all
+    fundamental filters" message only fires on a False -> True transition,
+    not every single run a ticker happens to still be passing."""
     messages = []
     dividend_state = state.setdefault("dividends", {})
 
@@ -124,23 +127,34 @@ def check_dividends(state: dict) -> List[str]:
         piotroski_ok = score is not None and score >= DIVIDEND_FILTERS["min_piotroski"]
         passes_fundamentals = fundamentals_result["passed"] and piotroski_ok
 
+        # entry may already hold reference_price/triggered_thresholds from a
+        # previous passing run -- keep that intact, only add/update the flag.
+        entry = dict(dividend_state.get(ticker, {}))
+        was_passing = entry.get("fundamentals_passed", False)
+
         if not passes_fundamentals:
+            entry["fundamentals_passed"] = False
+            dividend_state[ticker] = entry
             continue  # don't time an entry into something failing on quality
 
-        messages.append(
-            f"\u2705 {ticker} ({meta['group']}): yield {fundamentals_result['dividend_yield_pct']}%, "
-            f"payout {fundamentals_result['payout_ratio']}, beta {fundamentals_result['beta']}, "
-            f"F-Score {score}/9 \u2014 passes all fundamental filters"
-        )
+        if not was_passing:
+            messages.append(
+                f"\u2705 {ticker} ({meta['group']}): yield {fundamentals_result['dividend_yield_pct']}%, "
+                f"payout {fundamentals_result['payout_ratio']}, beta {fundamentals_result['beta']}, "
+                f"F-Score {score}/9 \u2014 passes all fundamental filters"
+            )
 
         try:
             price_msgs, updated_entry = check_trigger(
                 ticker, ticker, meta["trigger"], dividend_state.get(ticker)
             )
             messages.extend(price_msgs)
+            updated_entry["fundamentals_passed"] = True
             dividend_state[ticker] = updated_entry
         except Exception as exc:
             messages.append(f"\u26a0\ufe0f {ticker}: price trigger check failed ({exc})")
+            entry["fundamentals_passed"] = True
+            dividend_state[ticker] = entry
 
     return messages
 
