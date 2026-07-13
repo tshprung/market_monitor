@@ -31,11 +31,67 @@
       "triggered_thresholds": [
         -8,
         -15
-      ]
+      ],
+      "fundamentals_passed": true
     },
     "BEZQ.TA": {
       "reference_price": 428,
-      "triggered_thresholds": []
+      "triggered_thresholds": [],
+      "fundamentals_passed": true
+    },
+    "HRL": {
+      "fundamentals_passed": false
+    },
+    "BEN": {
+      "fundamentals_passed": false
+    },
+    "O": {
+      "fundamentals_passed": false
+    },
+    "KVUE": {
+      "fundamentals_passed": false
+    },
+    "PEP": {
+      "fundamentals_passed": false
+    },
+    "JNJ": {
+      "fundamentals_passed": false
+    },
+    "KO": {
+      "fundamentals_passed": false
+    },
+    "PG": {
+      "fundamentals_passed": false
+    },
+    "AMCR": {
+      "fundamentals_passed": false
+    },
+    "ALV.DE": {
+      "fundamentals_passed": false
+    },
+    "SIE.DE": {
+      "fundamentals_passed": false
+    },
+    "BAS.DE": {
+      "fundamentals_passed": false
+    },
+    "NG.L": {
+      "fundamentals_passed": false
+    },
+    "ULVR.L": {
+      "fundamentals_passed": false
+    },
+    "PZU.WA": {
+      "fundamentals_passed": false
+    },
+    "PKO.WA": {
+      "fundamentals_passed": false
+    },
+    "KGH.WA": {
+      "fundamentals_passed": false
+    },
+    "LUMI.TA": {
+      "fundamentals_passed": false
     }
   }
 }
