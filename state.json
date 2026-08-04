@@ -7,7 +7,7 @@
       ]
     },
     "DAX": {
-      "reference_price": 26001.310546875,
+      "reference_price": 26202.349609375,
       "triggered_thresholds": []
     },
     "FTSE 100": {
@@ -15,7 +15,7 @@
       "triggered_thresholds": []
     },
     "WIG20": {
-      "reference_price": 3943.0400390625,
+      "reference_price": 3996.449951171875,
       "triggered_thresholds": []
     },
     "TA-35": {
@@ -23,7 +23,7 @@
       "triggered_thresholds": []
     },
     "S&P 500": {
-      "reference_price": 7609.77978515625,
+      "reference_price": 7755.35986328125,
       "triggered_thresholds": []
     }
   },
