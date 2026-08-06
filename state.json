@@ -15,7 +15,7 @@
       "triggered_thresholds": []
     },
     "WIG20": {
-      "reference_price": 3996.449951171875,
+      "reference_price": 4022.159912109375,
       "triggered_thresholds": []
     },
     "TA-35": {
@@ -39,7 +39,7 @@
     "BEZQ.TA": {
       "reference_price": 428,
       "triggered_thresholds": [],
-      "fundamentals_passed": true
+      "fundamentals_passed": false
     },
     "HRL": {
       "fundamentals_passed": false
