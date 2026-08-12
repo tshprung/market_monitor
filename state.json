@@ -15,7 +15,7 @@
       "triggered_thresholds": []
     },
     "WIG20": {
-      "reference_price": 4048.659912109375,
+      "reference_price": 4065.1201171875,
       "triggered_thresholds": []
     },
     "TA-35": {
@@ -23,7 +23,7 @@
       "triggered_thresholds": []
     },
     "S&P 500": {
-      "reference_price": 7755.35986328125,
+      "reference_price": 7758.56982421875,
       "triggered_thresholds": []
     }
   },
@@ -63,7 +63,7 @@
       "fundamentals_passed": false
     },
     "PG": {
-      "fundamentals_passed": false
+      "fundamentals_passed": true
     },
     "AMCR": {
       "fundamentals_passed": false
