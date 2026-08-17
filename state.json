@@ -63,6 +63,11 @@
       "fundamentals_passed": false
     },
     "PG": {
+      "reference_price": 171.26251220703125,
+      "triggered_thresholds": [
+        -8,
+        -15
+      ],
       "fundamentals_passed": true
     },
     "AMCR": {
