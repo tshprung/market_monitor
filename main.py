@@ -52,7 +52,15 @@ def check_trigger(name: str, ticker: str, trigger: dict, saved_state: dict) -> T
     Returns (alert_messages, updated_state_entry)."""
     current_price, reference_price = _fetch_current_and_reference(ticker, trigger)
 
-    if saved_state is None:
+    # A dividend entry may contain fundamentals_passed without having a
+    # complete price-trigger state yet (e.g. if the first trigger check
+    # failed). Treat such partial state as uninitialized instead of raising
+    # KeyError on reference_price/triggered_thresholds.
+    if (
+        saved_state is None
+        or "reference_price" not in saved_state
+        or "triggered_thresholds" not in saved_state
+    ):
         tranche_state = TriggerState(reference_price=reference_price, triggered_thresholds=[])
     else:
         tranche_state = TriggerState(
@@ -95,7 +103,7 @@ def check_indices(state: dict) -> List[str]:
                 name, meta["signal_ticker"], meta["trigger"], index_state.get(name)
             )
         except Exception as exc:
-            messages.append(f"\u26a0\ufe0f {name}: data fetch failed ({exc})")
+            messages.append(f"\u26A0\ufe0f {name}: data fetch failed ({exc})")
             continue
 
         # Buy-vehicle/broker context only matters for actionable signals.
@@ -121,7 +129,7 @@ def check_dividends(state: dict) -> List[str]:
             fundamentals_result = evaluate_candidate(ticker)
             score = compute_piotroski_score(ticker)
         except Exception as exc:
-            messages.append(f"\u26a0\ufe0f {ticker}: screening failed ({exc})")
+            messages.append(f"\u26A0\ufe0f {ticker}: screening failed ({exc})")
             continue
 
         piotroski_ok = score is not None and score >= DIVIDEND_FILTERS["min_piotroski"]
@@ -152,7 +160,7 @@ def check_dividends(state: dict) -> List[str]:
             updated_entry["fundamentals_passed"] = True
             dividend_state[ticker] = updated_entry
         except Exception as exc:
-            messages.append(f"\u26a0\ufe0f {ticker}: price trigger check failed ({exc})")
+            messages.append(f"\u26A0\ufe0f {ticker}: price trigger check failed ({exc})")
             entry["fundamentals_passed"] = True
             dividend_state[ticker] = entry
 
