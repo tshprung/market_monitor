@@ -81,7 +81,8 @@ def check_trigger(name: str, ticker: str, trigger: dict, saved_state: dict) -> T
         messages.append(f"\U0001F4C8 {name}: new high reached ({current_price:.2f}). Buy cycle reset.")
     for signal in result["new_signals"]:
         messages.append(
-            f"\U0001F514 {name}: {signal['drawdown']:.1f}% vs. reference \u2192 "
+            f"\U0001F514 {name}: {signal['drawdown']:.1f}% vs. reference "
+            f"(threshold {signal['threshold']:.0f}%) \u2192 "
             f"BUY {signal['tranche_pct']}% tranche ({ticker})"
         )
 
