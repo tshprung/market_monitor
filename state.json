@@ -39,7 +39,7 @@
     "BEZQ.TA": {
       "reference_price": 428,
       "triggered_thresholds": [],
-      "fundamentals_passed": true
+      "fundamentals_passed": false
     },
     "HRL": {
       "fundamentals_passed": false
@@ -68,7 +68,7 @@
         -8,
         -15
       ],
-      "fundamentals_passed": true
+      "fundamentals_passed": false
     },
     "AMCR": {
       "fundamentals_passed": false
