@@ -1,7 +1,7 @@
 {
   "indices": {
     "Nasdaq 100": {
-      "reference_price": 30732.396484375,
+      "reference_price": 30807.931640625,
       "triggered_thresholds": []
     },
     "DAX": {
