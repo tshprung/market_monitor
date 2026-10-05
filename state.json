@@ -1,7 +1,7 @@
 {
   "indices": {
     "Nasdaq 100": {
-      "reference_price": 30807.931640625,
+      "reference_price": 31076.44140625,
       "triggered_thresholds": []
     },
     "DAX": {
@@ -84,7 +84,9 @@
       "fundamentals_passed": false
     },
     "ULVR.L": {
-      "fundamentals_passed": false
+      "reference_price": NaN,
+      "triggered_thresholds": [],
+      "fundamentals_passed": true
     },
     "PZU.WA": {
       "fundamentals_passed": false
