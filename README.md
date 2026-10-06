@@ -83,3 +83,73 @@ wasn't being tracked while it was failing).
   double check before placing an order.
 
 Not financial advice.
+
+## Backtest v2
+
+Run `python backtest.py` to compare buy-and-hold, monthly DCA, the index
+drawdown ladders configured above, a fixed -10/-20/-30% ladder, and an
+expanding drawdown-percentile ladder. Example options:
+
+```sh
+python backtest.py --simulations 1000 --seed 42 --cash-rate 0.03 --fee-bps 5
+python backtest.py --start 2000-01-01 --end 2025-01-01
+python backtest.py --evaluation-start 2019-01-01
+```
+
+Percentile configurations available for comparison are 70/85/95, 75/90/95,
+80/90/95, and 80/90/97. All four are included by default; `--percentiles 75 90 95`
+runs only one configuration. These are fixed candidate
+policies, not parameters selected for best historical performance. Each daily
+severity rank compares today's drawdown only with drawdowns observed before
+today; it requires 252 prior observations. The thresholds fire once per
+high-watermark episode. The reference distribution uses daily drawdown
+observations, so long episodes contribute more observations than short ones;
+episode-level performance summaries separately count complete >=5% underwater
+periods rather than individual days. The policy therefore makes decisions
+walk-forward, without using future prices. The printed whole-history results are still
+historical summaries, not proof that a configuration will work out of sample.
+`--evaluation-start` adds a holdout-style run: it starts a fresh 100-unit
+portfolio on that date while retaining earlier prices only for causal peak and
+percentile references. No purchases before that date carry into the test.
+
+Each instrument uses one series and one date range across strategies. Yahoo
+Finance daily closes are used for S&P 500, Nasdaq 100, DAX, FTSE 100, and
+TA-125, clipped to 1992-10-08 onward. WIG20TR comes from GPW Benchmark's public
+daily chart data, available from 2012-12-03. The pooled portfolio uses the
+shared overlap across instruments. Drawdown signals are observed at the close
+and executed at the next available close. Scheduled DCA orders use
+the first available close each calendar month; lump sum enters on the first
+close. Initial capital is 100 index-currency units. Fees default to 0 bps and
+idle cash earns 0% by default; both assumptions are explicit and configurable
+with `--fee-bps` and `--cash-rate`. No currency conversion or slippage is
+modeled. Annualized returns use elapsed calendar time. Maximum drawdown is
+measured on daily portfolio value. Average entry price is cost-weighted for
+shares bought. Cash remaining is terminal cash divided by starting capital.
+
+The random-timing benchmark runs 1,000 seeded simulations per ladder. Each
+simulation preserves that ladder's realized number and sizes of purchases but
+assigns them to random distinct trading dates in the same period. This is a
+conditional timing benchmark, not a test that the policy generalizes; the
+reported upper-tail p-value is descriptive and does not establish significance.
+Market drawdown episode counts and average episode troughs are printed so
+consecutive days in one decline are not presented as independent episodes.
+
+Series tested (Yahoo Finance `Close` where listed; no extra return adjustment):
+
+| Report label | Yahoo ticker | Series caveat |
+| --- | --- | --- |
+| S&P 500 | `^GSPC` | Price index; excludes dividends. |
+| Nasdaq 100 | `^NDX` | Price index; excludes dividends. |
+| DAX | `^GDAXI` | DAX performance index; includes reinvested dividends by index design. |
+| FTSE 100 | `^FTSE` | Price index; excludes dividends. |
+| WIG20TR (for WIG20) | GPW Benchmark ISIN `PL9999999425` | Official GPW Benchmark close series; total-return index calculated since 2012-12-03. Backtest uses its levels for both drawdown features and portfolio returns. |
+| TA-125 (configured as TA-35) | `^TA125.TA` | This is TA-125, not TA-35. TASE classifies TA-125 as gross total return; Yahoo's series was not reconciled against TASE's official history. Yahoo had no history for `^TA35.TA` in the check performed. |
+
+The live config and Telegram labels are intentionally untouched. Backtest v2
+reports the actual TA-125 series under its actual name and applies the wider
+thresholds currently assigned to that config entry. Yahoo's WIG20 symbol still
+has insufficient data, so WIG20TR from GPW Benchmark is used and labeled
+explicitly. S&P 500, Nasdaq 100, and FTSE 100 are price series and omit
+dividends; DAX is a performance index. Official TASE documentation classifies
+TA-125 as gross total return, but Yahoo's series was not reconciled against its
+official daily history, so comparisons that include TA-125 carry that caveat.
