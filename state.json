@@ -1,7 +1,7 @@
 {
   "indices": {
     "Nasdaq 100": {
-      "reference_price": 31076.44140625,
+      "reference_price": 31224.47265625,
       "triggered_thresholds": []
     },
     "DAX": {
@@ -13,7 +13,7 @@
       "triggered_thresholds": []
     },
     "WIG20": {
-      "reference_price": 4218.2998046875,
+      "reference_price": 4222.35986328125,
       "triggered_thresholds": []
     },
     "TA-35": {
@@ -21,7 +21,7 @@
       "triggered_thresholds": []
     },
     "S&P 500": {
-      "reference_price": 7799.8701171875,
+      "reference_price": 7818.93017578125,
       "triggered_thresholds": []
     }
   },
